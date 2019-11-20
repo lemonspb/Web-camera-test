@@ -2,9 +2,10 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 15px;
 }
 .camera__content{
-  margin: 0 auto;
+  margin: 10px auto;
   width: 400px;
   height: 400px;
   display: flex;
@@ -14,13 +15,20 @@
 }
 .camera__image{
   width: 300px;  
+  margin-bottom: 20px;
+}
+.camera__video{
+  margin-bottom: 20px;
 }
 .camera__canvas{
   display: none;
+  width: 100%;
+  height: 100%;
   
 }
 .camera__btn-block{
   display: flex;
+  margin-bottom: 20px;
 }
 .camera__btn{
   background-color: #4CAF50; 
@@ -34,7 +42,25 @@
   margin: 4px 2px;
   cursor: pointer;
   transition-duration: 0.4s;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.camera__btn--back{
+  background-color: antiquewhite;
+  color: black;
 }
 button:disabled{
   background: gray;
+}
+.camera__wrap-img{
+  max-width: 25%;
+  width:100%;
+  padding-bottom: 10px;
+}
+.camera__img{
+  width: 100%;
+
+}
+.camera__history{
+  display: flex;
+  flex-wrap: wrap;
 }

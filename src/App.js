@@ -23,7 +23,7 @@ function App() {
   function captureButton() {
     canvas = canvasRef.current
     const ctx = canvas.getContext("2d");
-    ctx.drawImage(videos, 10, 10);
+    ctx.drawImage(videos, 0, 0,  200, 150);
     addImage();
     
   }
@@ -84,11 +84,14 @@ const clearImage = () =>{
     
       
       
-      
+      {images.length === 0?'':<h3>History</h3>}  
       <div className='camera__history'>
+    
      {images.map((el)=>{
       return (
-        <img src={`${el}`} />
+        <div className='camera__wrap-img'>
+        <img src={`${el}`}  alt='' className='camera__img' />
+        </div>
       )  
      })}
    </div>
