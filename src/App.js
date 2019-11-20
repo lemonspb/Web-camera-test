@@ -5,7 +5,6 @@ import "./App.css";
 function App() {
   const canvasRef = React.createRef();
   const videoRef = React.createRef();
-  
   const [images, setImages] = useState([]);
   const [videos, setVideos] = useState("");
   const [showImage, setShowImage] = useState(true);
@@ -13,7 +12,7 @@ function App() {
 
   let video = null;
   let canvas = null;
-  let i = 1
+  let i = 1;
   const constraints = {
     video: { width: 400, height: 320 }
   };
@@ -30,8 +29,10 @@ function App() {
   const clearImage = () => {
     setImages([]);
   };
+    console.log(videoRef)
 
   const startVideo = () => {
+    
     setIsOpenCamera(true);
     setShowImage(false);
     navigator.mediaDevices
@@ -69,11 +70,10 @@ function App() {
     <div className="camera">
       <canvas className="camera__canvas" ref={canvasRef}></canvas>
       <div className="camera__content">
-        {showImage ? (
-          <img src={camera} className="camera__image" alt="" />
-        ) : (
-          <video src="" className="camera__video" ref={videoRef}></video>
-        )}
+        {showImage ? 
+          <img src={camera} className="camera__image" alt="" />: 
+          <video src="" className="camera__video" ></video>
+      }
         <div className="camera__btn-block">
           <button
             className=" camera__btn camera__btn--screen"
@@ -99,7 +99,7 @@ function App() {
             <button
               className=" camera__btn camera__btn--back"
               onClick={endVideo}>
-              back
+              Back
             </button>
           )}
         </div>
