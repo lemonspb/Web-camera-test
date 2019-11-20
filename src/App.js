@@ -80,8 +80,10 @@ const clearImage = () =>{
       <button  className='camera__btn' onClick={() =>!isOpenCamera?startVideo():captureButton()}>
         {!isOpenCamera?'Open Camera':'Capture'}
       </button>
-      <button onClick={clearImage}>Clear Story</button>
-      <button onClick={endVideo}>Stop</button>
+      {!isOpenCamera?images.length === 0? <button onClick={clearImage} disabled>Clear Story</button>:<button onClick={clearImage}>Clear Story</button>:<button onClick={endVideo}>back</button>}
+      
+      
+      
       <div className='camera__history'>
      {images.map((el)=>{
       return (
