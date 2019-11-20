@@ -1,0 +1,16 @@
+.camera{
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.camera__content{
+  margin: 0 auto;
+  width: 400px;
+  height: 400px;
+}
+.camera__image{
+  width: 300px;  
+}
+.camera__canvas{
+  display: none;
+}
