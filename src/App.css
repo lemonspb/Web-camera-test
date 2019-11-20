@@ -45,12 +45,21 @@
   transition-duration: 0.4s;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
+.camera__btn:hover{
+  background-color: red;
+}
 .camera__btn--back{
   background-color: antiquewhite;
   color: black;
 }
+.camera__btn--back:hover{
+  background-color: blue;
+}
 button:disabled{
   background: gray;
+}
+button:disabled:hover{
+  background-color: gray;
 }
 .camera__wrap-img{
   max-width: 25%;
