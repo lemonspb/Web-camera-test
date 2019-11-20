@@ -74,13 +74,14 @@ const clearImage = () =>{
       <canvas className='camera__canvas' ref={canvasRef}></canvas>
       <div className='camera__content'>
         {showImage? <img src={camera}  className='camera__image' alt=''/> : <video src="" className='camera__video' ></video>}
-    
-    
-      </div>
-      <button  className='camera__btn' onClick={() =>!isOpenCamera?startVideo():captureButton()}>
+        <div className='camera__btn-block'>
+        <button  className=' camera__btn camera__btn--screen' onClick={() =>!isOpenCamera?startVideo():captureButton()}>
         {!isOpenCamera?'Open Camera':'Capture'}
       </button>
-      {!isOpenCamera?images.length === 0? <button onClick={clearImage} disabled>Clear Story</button>:<button onClick={clearImage}>Clear Story</button>:<button onClick={endVideo}>back</button>}
+      {!isOpenCamera?images.length === 0? <button onClick={clearImage} disabled className='camera__btn camera__btn--clear'>Clear Story</button>:<button onClick={clearImage} className='camera__btn camera__btn--clear'>Clear Story</button>:<button className=' camera__btn camera__btn--back' onClick={endVideo}>back</button>}
+      </div>
+      </div>
+    
       
       
       
