@@ -31,6 +31,7 @@
   margin-bottom: 20px;
 }
 .camera__btn{
+  
   background-color: #4CAF50; 
   border: none;
   color: white;
@@ -39,7 +40,7 @@
   text-decoration: none;
   display: inline-block;
   font-size: 13px;
-  margin: 4px 2px;
+  margin: 4px 15px;
   cursor: pointer;
   transition-duration: 0.4s;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
