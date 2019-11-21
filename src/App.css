@@ -1,11 +1,11 @@
-.camera{
+.camera {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 15px;
   box-sizing: border-box;
 }
-.camera__content{
+.camera__content {
   margin: 10px auto;
   width: 400px;
   height: 400px;
@@ -14,29 +14,26 @@
   justify-content: center;
   flex-direction: column;
 }
-.camera__image{
-  width: 100%;  
+.camera__image {
+  width: 100%;
   margin-bottom: 20px;
   margin-top: 10px;
-
 }
-.camera__video{
+.camera__video {
   margin-top: 10px;
   margin-bottom: 20px;
 }
-.camera__canvas{
+.camera__canvas {
   display: none;
   width: 100%;
   height: 100%;
-  
 }
-.camera__btn-block{
+.camera__btn-block {
   display: flex;
   margin-bottom: 20px;
 }
-.camera__btn{
-  
-  background-color: #4CAF50; 
+.camera__btn {
+  background-color: #4caf50;
   border: none;
   color: white;
   padding: 15px 32px;
@@ -47,71 +44,75 @@
   margin: 4px 15px;
   cursor: pointer;
   transition-duration: 0.4s;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-.camera__btn:hover{
+.camera__btn:hover {
   background-color: tomato;
 }
-.camera__btn--back{
+.camera__btn--back {
   background-color: white;
   color: black;
 }
-.camera__btn--back:hover{
+.camera__btn--back:hover {
   background-color: darkcyan;
 }
-button:disabled{
+button:disabled {
   background: gray;
 }
-button:disabled:hover{
+button:disabled:hover {
   background-color: gray;
 }
-.camera__wrap-img{
+.camera__btn--delete {
+  padding: 10px 22px;
+}
+.camera__wrap-img {
   width: 25%;
+  height: auto;
   box-sizing: border-box;
   padding-right: 15px;
   padding-left: 15px;
   padding-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
-.camera__img{
+.camera__img {
   width: 100%;
-
+  height: 220px;
+  margin-bottom: 10px;
 }
-.camera__history{
+.camera__history {
   display: flex;
   flex-wrap: wrap;
 }
 
-
-  
-
-@media  screen  and (max-width: 768px){
-  .camera__wrap-img{
+@media screen and (max-width: 768px) {
+  .camera__wrap-img {
     width: 50%;
-    
+
     padding-bottom: 10px;
   }
- .camera__btn-block{
-   flex-direction: column;
-   width: 100%;
-   
- } 
- .camera__btn{
- width: 100%;
- margin-left: 0;
- margin-right: 0;
-} 
-.camera__content{
-  width: 300px;
-}
-.camera__video{
-  width:100%;
-}
-}
-@media  screen  and (max-width: 480px){
-  .camera__wrap-img{
+  .camera__btn-block {
+    flex-direction: column;
     width: 100%;
-    
+  }
+  .camera__btn {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .camera__content {
+    width: 300px;
+  }
+  .camera__video {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 480px) {
+  .camera__wrap-img {
+    width: 100%;
+
     padding-bottom: 10px;
   }
-  
 }

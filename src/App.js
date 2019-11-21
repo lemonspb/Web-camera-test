@@ -18,7 +18,7 @@ function App() {
   const addImage = () => {
     let time = new Date() 
     const ctx = canvasRef.current.getContext("2d");
-    ctx.drawImage(videos, 0, 0, 200, 150);
+    ctx.drawImage(videos, 0, 0, 350, 160);
     const data = canvasRef.current.toDataURL("image/png");
     const map = new Map();
     map.set(time,data)
@@ -63,6 +63,17 @@ function App() {
     setIsOpenCamera(false);
   };
 
+const deleteImage = (img) =>{
+const newImages = images.filter((el)=>{
+  if(Object.values(el)[0] !== Object.values(img)[0]){
+    return el;
+  }
+
+})
+setImages(newImages)  
+
+}
+
   return (
     <div className="camera">
       <canvas className="camera__canvas" ref={canvasRef}></canvas>
@@ -101,12 +112,13 @@ function App() {
           console.log(Object.keys(el))
           return (
             <div className="camera__wrap-img" >
-              <img src={`${Object.values(el)}`} alt="" className="camera__img" />
+              <img src={`${Object.values(el)}`} alt="" className="camera__img"  download/>
               <span>
               <Moment format='lll'>
               {Object.keys(el)[0]}  
             </Moment>
              </span>
+              <button onClick={ () =>deleteImage(el)}  className='camera__btn camera__btn--delete'>delete</button>
             </div>
           );
         })}
