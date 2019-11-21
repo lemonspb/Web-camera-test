@@ -46,14 +46,14 @@
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 .camera__btn:hover{
-  background-color: red;
+  background-color: tomato;
 }
 .camera__btn--back{
-  background-color: antiquewhite;
+  background-color: white;
   color: black;
 }
 .camera__btn--back:hover{
-  background-color: blue;
+  background-color: darkcyan;
 }
 button:disabled{
   background: gray;
@@ -62,8 +62,8 @@ button:disabled:hover{
   background-color: gray;
 }
 .camera__wrap-img{
-  max-width: 25%;
-  width:100%;
+  width: 25%;
+  
   padding-bottom: 10px;
 }
 .camera__img{
