@@ -26,10 +26,11 @@ function App() {
   };
 
   const startVideo = () => {
+
     setIsOpenCamera(true);
     navigator.mediaDevices
       .getUserMedia(constraints)
-      .then(function(stream) {
+      .then(function (stream) {
         let video = document.querySelector("video");
 
         setVideos(video);
@@ -63,31 +64,28 @@ function App() {
         {!isOpenCamera ? (
           <img src={camera} className="camera__image" alt="" />
         ) : (
-          <video src="" className="camera__video" ref={videoRef}></video>
-        )}
+            <video src="" className="camera__video" ref={videoRef}></video>
+          )}
         <div className="camera__btn-block">
           <button
             className=" camera__btn camera__btn--screen"
-            onClick={() => (!isOpenCamera ? startVideo() : addImage())}
-          >
+            onClick={() => (!isOpenCamera ? startVideo() : addImage())}>
             {!isOpenCamera ? "Open Camera" : "Capture"}
           </button>
           {!isOpenCamera ? (
             <button
               onClick={clearImage}
               disabled={images.length === 0}
-              className="camera__btn camera__btn--clear"
-            >
+              className="camera__btn camera__btn--clear">
               Clear Story
             </button>
           ) : (
-            <button
-              className=" camera__btn camera__btn--back"
-              onClick={endVideo}
-            >
-              Back
+              <button
+                className=" camera__btn camera__btn--back"
+                onClick={endVideo}>
+                Back
             </button>
-          )}
+            )}
         </div>
       </div>
 
