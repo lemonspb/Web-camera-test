@@ -68,7 +68,9 @@ function App() {
 
 const deleteItem = item => setHisory(history.filter((el) =>  el !== item))  
 
-const getPicture = picture => setFullPicture(picture) 
+const openPicture = picture => setFullPicture(picture) 
+const closePicture = () => setFullPicture('')
+
   return (
     <>
     <div className="camera">
@@ -107,7 +109,7 @@ const getPicture = picture => setFullPicture(picture)
         {history.map((el,i) => {
           return (
             <div className="camera__wrap-history"   key={i++}>
-              <img src={`${el.img}`} alt="" className="camera__img" onClick={()=>{getPicture(el.img)}} />
+              <img src={`${el.img}`} alt="" className="camera__img" onClick={()=>{openPicture(el.img)}} />
               <span>
               <Moment format='lll' >
               {el.date}  
@@ -120,7 +122,7 @@ const getPicture = picture => setFullPicture(picture)
       </div>
   
     </div>
-        <FullScreen picture={fullPicture}/>
+        <FullScreen picture={fullPicture} closePicture={closePicture}/>
         </>
   );
 }
