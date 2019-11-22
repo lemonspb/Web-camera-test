@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import camera from "./image/camera.png";
 import "./App.css";
 import Moment from 'react-moment';
+
 function App() {
   
   const canvasRef = React.createRef();
@@ -64,9 +65,8 @@ function App() {
     setIsOpenCamera(false);
   };
 
-const deleteItem = (img) =>{
-const newImages = history.filter((el) =>  el !== img)
-setHisory(newImages)  
+const deleteItem = (item) =>{
+setHisory(history.filter((el) =>  el !== item))  
 }
 
   return (
