@@ -1,13 +1,15 @@
 import React, { useState } from "react";
+import FullScreen from './Full-screen';
 import camera from "./image/camera.png";
 import "./App.css";
 import Moment from 'react-moment';
 
 function App() {
-  
+   
   const canvasRef = React.createRef();
   const videoRef = React.createRef();
   const [history, setHisory] = useState([]);
+  const [fullPicture, setFullPicture] = useState('')
   const [videos, setVideos] = useState("");
   const [isOpenCamera, setIsOpenCamera] = useState(false);
 
@@ -29,9 +31,8 @@ function App() {
     
   };
 
-  const clearHistory = () => {
-    setHisory([]);
-  };
+  const clearHistory = () => setHisory([]);
+  
 
   const startVideo = () => {
 
@@ -65,11 +66,11 @@ function App() {
     setIsOpenCamera(false);
   };
 
-const deleteItem = (item) =>{
-setHisory(history.filter((el) =>  el !== item))  
-}
+const deleteItem = item => setHisory(history.filter((el) =>  el !== item))  
 
+const getPicture = picture => setFullPicture(picture) 
   return (
+    <>
     <div className="camera">
       <canvas className="camera__canvas" ref={canvasRef}></canvas>
       <div className="camera__content">
@@ -103,10 +104,10 @@ setHisory(history.filter((el) =>  el !== item))
 
       {history.length > 0 && <h3>History</h3>}
       <div className="camera__history">
-        {history.map((el) => {
+        {history.map((el,i) => {
           return (
-            <div className="camera__wrap-history" >
-              <img src={`${el.img}`} alt="" className="camera__img"  />
+            <div className="camera__wrap-history"   key={i++}>
+              <img src={`${el.img}`} alt="" className="camera__img" onClick={()=>{getPicture(el.img)}} />
               <span>
               <Moment format='lll' >
               {el.date}  
@@ -117,7 +118,10 @@ setHisory(history.filter((el) =>  el !== item))
           );
         })}
       </div>
+  
     </div>
+        <FullScreen picture={fullPicture}/>
+        </>
   );
 }
 
