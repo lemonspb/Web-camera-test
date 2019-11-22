@@ -65,7 +65,7 @@ button:disabled:hover {
 .camera__btn--delete {
   padding: 10px 22px;
 }
-.camera__wrap-img {
+.camera__wrap-history {
   width: 25%;
   height: auto;
   box-sizing: border-box;
@@ -88,7 +88,7 @@ button:disabled:hover {
 }
 
 @media screen and (max-width: 768px) {
-  .camera__wrap-img {
+  .camera__wrap-history {
     width: 50%;
 
     padding-bottom: 10px;
@@ -110,7 +110,7 @@ button:disabled:hover {
   }
 }
 @media screen and (max-width: 480px) {
-  .camera__wrap-img {
+  .camera__wrap-history {
     width: 100%;
 
     padding-bottom: 10px;

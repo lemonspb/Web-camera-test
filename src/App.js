@@ -6,7 +6,7 @@ function App() {
   
   const canvasRef = React.createRef();
   const videoRef = React.createRef();
-  const [images, setImages] = useState([]);
+  const [history, setHisory] = useState([]);
   const [videos, setVideos] = useState("");
   const [isOpenCamera, setIsOpenCamera] = useState(false);
 
@@ -15,22 +15,21 @@ function App() {
   };
 
   
-  const addImage = () => {
-    let time = new Date() 
+  const addHistory = () => {
+    let date = new Date() 
     const ctx = canvasRef.current.getContext("2d");
     ctx.drawImage(videos, 0, 0, 350, 160);
-    const data = canvasRef.current.toDataURL("image/png");
-    const object = {
-      date: time,
-      img: data
+    const img = canvasRef.current.toDataURL("image/png");
+    const imageDate = {
+      date,
+      img
     }
-    setImages([...images,object])
+    setHisory([...history,imageDate])
     
   };
-  console.log(images)
 
-  const clearImage = () => {
-    setImages([]);
+  const clearHistory = () => {
+    setHisory([]);
   };
 
   const startVideo = () => {
@@ -65,9 +64,9 @@ function App() {
     setIsOpenCamera(false);
   };
 
-const deleteImage = (img) =>{
-const newImages = images.filter((el) =>  el !== img)
-setImages(newImages)  
+const deleteItem = (img) =>{
+const newImages = history.filter((el) =>  el !== img)
+setHisory(newImages)  
 }
 
   return (
@@ -82,13 +81,13 @@ setImages(newImages)
         <div className="camera__btn-block">
           <button
             className=" camera__btn camera__btn--screen"
-            onClick={() => (!isOpenCamera ? startVideo() : addImage())}>
+            onClick={() => (!isOpenCamera ? startVideo() : addHistory())}>
             {!isOpenCamera ? "Open Camera" : "Capture"}
           </button>
           {!isOpenCamera ? (
             <button
-              onClick={clearImage}
-              disabled={images.length === 0}
+              onClick={clearHistory}
+              disabled={history.length === 0}
               className="camera__btn camera__btn--clear">
               Clear Story
             </button>
@@ -102,19 +101,18 @@ setImages(newImages)
         </div>
       </div>
 
-      {images.length > 0 && <h3>History</h3>}
+      {history.length > 0 && <h3>History</h3>}
       <div className="camera__history">
-        {images.map((el) => {
-         console.log(el)
+        {history.map((el) => {
           return (
-            <div className="camera__wrap-img" >
-              <img src={`${el.img}`} alt="" className="camera__img"  download/>
+            <div className="camera__wrap-history" >
+              <img src={`${el.img}`} alt="" className="camera__img"  />
               <span>
-              <Moment format='lll'>
+              <Moment format='lll' >
               {el.date}  
             </Moment>
              </span>
-              <button onClick={ () =>deleteImage(el)}  className='camera__btn camera__btn--delete'>delete</button>
+              <button onClick={ () =>deleteItem(el)}  className='camera__btn camera__btn--delete'>Delete</button>
             </div>
           );
         })}
