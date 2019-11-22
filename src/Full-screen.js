@@ -2,7 +2,7 @@ import React, { useState,useEffect } from "react";
 import "./App.css";
 
 
-function FullScreen({picture,closePicture}) {
+function FullScreen({picture,closePicture,next,prev}) {
   const [active, setActive] = useState(false)
 
   useEffect(() => {
@@ -16,7 +16,10 @@ function FullScreen({picture,closePicture}) {
       {active?<div className='full-screen'>
                     <div className='full-screen__container'>  
       <span className="close" onClick={()=>closePicture()}>&times;</span>
-      <button>next</button> 
+      <div className='full-screen__btn-block'>
+      <button onClick={next} className='full-screen__btn full-screen__btn--next'>next</button> 
+      <button onClick={prev} className='full-screen__btn full-screen__btn--next'>prev</button> 
+      </div>
       <img src={picture} className='full-screen__img' alt='' />
       </div>
       </div>: null}
