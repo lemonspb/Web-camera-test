@@ -11,22 +11,31 @@ function App() {
   const [fullPicture, setFullPicture] = useState("");
   const [videos, setVideos] = useState("");
   const [isOpenCamera, setIsOpenCamera] = useState(false);
-
+  const [captureDisabled, setCaptureDisabled] = useState(false);
   const constraints = {
     video: { width: 400, height: 320 }
   };
-
   const addHistory = () => {
     let date = new Date();
-    const ctx = canvasRef.current.getContext("2d");
+    let canvas = document.querySelector('canvas')
+    let ctx = canvas.getContext("2d");
     ctx.drawImage(videos, 0, 0, 350, 160);
-    const img = canvasRef.current.toDataURL("image/png");
+    const img = canvas.toDataURL("image/png");
     const imageDate = {
       date,
       img
     };
     setHisory([...history, imageDate]);
   };
+
+  const autoScreen = () =>{
+    setCaptureDisabled(true)
+    setTimeout(() => { 
+      addHistory()
+      setCaptureDisabled(false)
+
+    }, 3000);
+  }
 
   const clearHistory = () => setHisory([]);
 
@@ -68,27 +77,31 @@ function App() {
 
   const nextFullScreenPicture = () => {
     history.find((el, index, array) => {
-      // if(index >= array.length-1){
-      //   setFullPicture(array[0].img);
-      // }
-
-       if (el.img === fullPicture) {       
-        setFullPicture(array[++index].img);
        
+       if (el.img === fullPicture  ) {
+         if(index >= array.length-1 ){
+          setFullPicture(array[0].img)   
+         }
+         else{      
+        setFullPicture(array[++index].img);
+         }
       }
-     
+      
     });
   };
   const prevFullScreenPicture = () => {
-     history.find((el, index, array) => {
-      // if(index <= array.length-1){
-      //   setFullPicture(array[0].img);
-      //   console.log('d')
-      // }
-      if (el.img === fullPicture) {
-        setFullPicture(array[--index].img);
-      }
-    });
+    history.find((el, index, array) => {
+       
+      if (el.img === fullPicture  ) {
+        if(index <= 0 ){
+         setFullPicture(array[array.length - 1].img)   
+        }
+        else{      
+       setFullPicture(array[--index].img);
+        }
+     }
+     
+   });
   };
 
   return (
@@ -102,9 +115,15 @@ function App() {
             <video src="" className="camera__video" ref={videoRef}></video>
           )}
           <div className="camera__btn-block">
+          {isOpenCamera?<button
+              className=" camera__btn camera__btn--screen"
+              onClick={()=>autoScreen()}>
+              autoscreen
+              </button>:null}
             <button
               className=" camera__btn camera__btn--screen"
-              onClick={() => (!isOpenCamera ? startVideo() : addHistory())}
+              disabled = {captureDisabled}
+              onClick={() => (!isOpenCamera ? startVideo() : addHistory(canvasRef.current))}
             >
               {!isOpenCamera ? "Open Camera" : "Capture"}
             </button>

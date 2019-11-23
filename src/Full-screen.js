@@ -18,7 +18,7 @@ function FullScreen({picture,closePicture,next,prev}) {
       <span className="close" onClick={()=>closePicture()}>&times;</span>
       <div className='full-screen__btn-block'>
       <button onClick={next} className='full-screen__btn full-screen__btn--next'>next</button> 
-      <button onClick={prev} className='full-screen__btn full-screen__btn--next'>prev</button> 
+      <button onClick={prev} className='full-screen__btn full-screen__btn--prev'>prev</button> 
       </div>
       <img src={picture} className='full-screen__img' alt='' />
       </div>
