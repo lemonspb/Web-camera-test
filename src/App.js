@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import FullScreen from "./Full-screen";
 import camera from "./image/camera.png";
+import soundClick from './sound/click.mp3'
 import "./App.css";
 import Moment from "react-moment";
 
@@ -14,7 +15,24 @@ function App({canvasRef,videoRef}) {
   const constraints = {
     video: { width: 400, height: 320 }
   };
+ 
+const makeSoundClick = () =>{
+  let sound = new Audio()
+    sound.src = soundClick;
+    const playPromise = sound.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(_ => {
+          console.log("audio played auto");
+        })
+        .catch(error => {
+          console.log("playback prevented");
+        });
+    }
+}
+
   const addHistory = () => {
+    makeSoundClick()
     let date = new Date();
     let canvas = canvasRef.current;
     let ctx = canvas.getContext("2d");
