@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import FullScreen from "./Full-screen";
 import camera from "./image/camera.png";
-import soundClick from './sound/click.mp3'
+import soundClick from "./sound/click.mp3";
 import "./App.css";
 import Moment from "react-moment";
 
-function App({canvasRef,videoRef}) {
-
+function App({ canvasRef, videoRef }) {
   const [history, setHisory] = useState([]);
   const [fullPictureIndex, setFullPictureIndex] = useState(undefined);
   const [videos, setVideos] = useState("");
@@ -15,9 +14,9 @@ function App({canvasRef,videoRef}) {
   const constraints = {
     video: { width: 400, height: 320 }
   };
- 
-const makeSoundClick = () =>{
-  let sound = new Audio()
+
+  const makeSoundClick = () => {
+    let sound = new Audio();
     sound.src = soundClick;
     const playPromise = sound.play();
     if (playPromise !== undefined) {
@@ -29,10 +28,10 @@ const makeSoundClick = () =>{
           console.log("playback prevented");
         });
     }
-}
+  };
 
   const addHistory = () => {
-    makeSoundClick()
+    makeSoundClick();
     let date = new Date();
     let canvas = canvasRef.current;
     let ctx = canvas.getContext("2d");
@@ -45,16 +44,13 @@ const makeSoundClick = () =>{
     setHisory([...history, imageDate]);
   };
 
- 
-
-  const autoScreen = () =>{
-    setCaptureDisabled(true)
-    setTimeout(() => { 
-      addHistory()
-      setCaptureDisabled(false)
-
+  const autoScreen = () => {
+    setCaptureDisabled(true);
+    setTimeout(() => {
+      addHistory();
+      setCaptureDisabled(false);
     }, 3000);
-  }
+  };
 
   const clearHistory = () => setHisory([]);
   const startVideo = () => {
@@ -89,7 +85,6 @@ const makeSoundClick = () =>{
   };
 
   const deleteItem = item => setHisory(history.filter(el => el !== item));
- 
 
   const openPicture = index => setFullPictureIndex(index);
   const closePicture = () => setFullPictureIndex(undefined);
@@ -100,17 +95,16 @@ const makeSoundClick = () =>{
   };
   const prevFullScreenPicture = () => {
     const prev = fullPictureIndex - 1;
-    setFullPictureIndex(prev > 0 ? prev : history.length - 1);
+    setFullPictureIndex(prev >= 0 ? prev : history.length - 1);
   };
 
-  useEffect(()=>{
-    window.addEventListener('keyup',(e)=>{
-      if(e.key === 'Escape'){
-        closePicture()
+  useEffect(() => {
+    window.addEventListener("keyup", e => {
+      if (e.key === "Escape") {
+        closePicture();
       }
-    })
-  },[])
-
+    });
+  }, []);
 
   return (
     <>
@@ -123,15 +117,20 @@ const makeSoundClick = () =>{
             <video src="" className="camera__video" ref={videoRef}></video>
           )}
           <div className="camera__btn-block">
-          {isOpenCamera?<button
-              className=" camera__btn camera__btn--screen"
-              onClick={()=>autoScreen()}>
-              autoscreen
-              </button>:null}
+            {isOpenCamera ? (
+              <button
+                className=" camera__btn camera__btn--screen"
+                onClick={() => autoScreen()}
+              >
+                autoscreen
+              </button>
+            ) : null}
             <button
               className=" camera__btn camera__btn--screen"
-              disabled = {captureDisabled}
-              onClick={() => (!isOpenCamera ? startVideo() : addHistory(canvasRef.current))}
+              disabled={captureDisabled}
+              onClick={() =>
+                !isOpenCamera ? startVideo() : addHistory(canvasRef.current)
+              }
             >
               {!isOpenCamera ? "Open Camera" : "Capture"}
             </button>
@@ -158,14 +157,14 @@ const makeSoundClick = () =>{
           {history.map((el, i) => {
             return (
               <div className="camera__wrap-history" key={i}>
-              <img
-                src={`${el.img}`}
-                alt=""
-                className="camera__img"
-                onClick={() => {
-                  openPicture(i);
-                }}
-              />
+                <img
+                  src={`${el.img}`}
+                  alt=""
+                  className="camera__img"
+                  onClick={() => {
+                    openPicture(i);
+                  }}
+                />
                 <span>
                   <Moment format="lll">{el.date}</Moment>
                 </span>
@@ -181,7 +180,7 @@ const makeSoundClick = () =>{
         </div>
       </div>
       <FullScreen
-          picture={fullPictureIndex != null && history[fullPictureIndex].img}
+        picture={fullPictureIndex != null && history[fullPictureIndex].img}
         closePicture={closePicture}
         next={nextFullScreenPicture}
         prev={prevFullScreenPicture}
