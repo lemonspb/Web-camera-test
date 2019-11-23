@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FullScreen from "./Full-screen";
 import camera from "./image/camera.png";
 import "./App.css";
 import Moment from "react-moment";
 
-function App() {
-  const canvasRef = React.createRef();
-  const videoRef = React.createRef();
+function App({canvasRef,videoRef}) {
+
   const [history, setHisory] = useState([]);
-  const [fullPicture, setFullPicture] = useState("");
+  const [fullPictureIndex, setFullPictureIndex] = useState(undefined);
   const [videos, setVideos] = useState("");
   const [isOpenCamera, setIsOpenCamera] = useState(false);
   const [captureDisabled, setCaptureDisabled] = useState(false);
@@ -17,7 +16,7 @@ function App() {
   };
   const addHistory = () => {
     let date = new Date();
-    let canvas = document.querySelector('canvas')
+    let canvas = canvasRef.current;
     let ctx = canvas.getContext("2d");
     ctx.drawImage(videos, 0, 0, 350, 160);
     const img = canvas.toDataURL("image/png");
@@ -27,6 +26,8 @@ function App() {
     };
     setHisory([...history, imageDate]);
   };
+
+ 
 
   const autoScreen = () =>{
     setCaptureDisabled(true)
@@ -38,13 +39,12 @@ function App() {
   }
 
   const clearHistory = () => setHisory([]);
-
   const startVideo = () => {
     setIsOpenCamera(true);
     navigator.mediaDevices
       .getUserMedia(constraints)
       .then(function(stream) {
-        let video = document.querySelector("video");
+        let video = videoRef.current;
 
         setVideos(video);
 
@@ -71,38 +71,28 @@ function App() {
   };
 
   const deleteItem = item => setHisory(history.filter(el => el !== item));
+ 
 
-  const openPicture = picture => setFullPicture(picture);
-  const closePicture = () => setFullPicture("");
+  const openPicture = index => setFullPictureIndex(index);
+  const closePicture = () => setFullPictureIndex(undefined);
 
   const nextFullScreenPicture = () => {
-    history.find((el, index, array) => {
-       
-       if (el.img === fullPicture  ) {
-         if(index >= array.length-1 ){
-          setFullPicture(array[0].img)   
-         }
-         else{      
-        setFullPicture(array[++index].img);
-         }
-      }
-      
-    });
+    const next = fullPictureIndex + 1;
+    setFullPictureIndex(next < history.length ? next : 0);
   };
   const prevFullScreenPicture = () => {
-    history.find((el, index, array) => {
-       
-      if (el.img === fullPicture  ) {
-        if(index <= 0 ){
-         setFullPicture(array[array.length - 1].img)   
-        }
-        else{      
-       setFullPicture(array[--index].img);
-        }
-     }
-     
-   });
+    const prev = fullPictureIndex - 1;
+    setFullPictureIndex(prev > 0 ? prev : history.length - 1);
   };
+
+  useEffect(()=>{
+    window.addEventListener('keyup',(e)=>{
+      if(e.key === 'Escape'){
+        closePicture()
+      }
+    })
+  },[])
+
 
   return (
     <>
@@ -145,20 +135,19 @@ function App() {
             )}
           </div>
         </div>
-
         {history.length > 0 && <h3>History</h3>}
         <div className="camera__history">
           {history.map((el, i) => {
             return (
-              <div className="camera__wrap-history" key={i++}>
-                <img
-                  src={`${el.img}`}
-                  alt=""
-                  className="camera__img"
-                  onClick={() => {
-                    openPicture(el.img);
-                  }}
-                />
+              <div className="camera__wrap-history" key={i}>
+              <img
+                src={`${el.img}`}
+                alt=""
+                className="camera__img"
+                onClick={() => {
+                  openPicture(i);
+                }}
+              />
                 <span>
                   <Moment format="lll">{el.date}</Moment>
                 </span>
@@ -174,7 +163,7 @@ function App() {
         </div>
       </div>
       <FullScreen
-        picture={fullPicture}
+          picture={fullPictureIndex != null && history[fullPictureIndex].img}
         closePicture={closePicture}
         next={nextFullScreenPicture}
         prev={prevFullScreenPicture}
