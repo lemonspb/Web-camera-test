@@ -9,11 +9,14 @@ function App({ canvasRef, videoRef }) {
   const [history, setHisory] = useState([]);
   const [fullPictureIndex, setFullPictureIndex] = useState(undefined);
   const [videos, setVideos] = useState("");
+  const [timerCount, setTimerCount] = useState(3)
   const [isOpenCamera, setIsOpenCamera] = useState(false);
   const [captureDisabled, setCaptureDisabled] = useState(false);
   const constraints = {
     video: { width: 400, height: 320 }
   };
+  let count = 4
+
 
   const makeSoundClick = () => {
     let sound = new Audio();
@@ -45,13 +48,25 @@ function App({ canvasRef, videoRef }) {
   };
 
   const autoScreen = () => {
+    timer()
     setCaptureDisabled(true);
     setTimeout(() => {
       addHistory();
       setCaptureDisabled(false);
     }, 3000);
   };
-
+  
+  const timer  = () =>{
+    count--
+    setTimerCount(count)
+   
+    if(count===0){
+      return false
+    }
+    setTimeout(timer , 1000)
+      
+  }
+ 
   const clearHistory = () => setHisory([]);
   const startVideo = () => {
     setIsOpenCamera(true);
@@ -99,6 +114,7 @@ function App({ canvasRef, videoRef }) {
   };
 
   useEffect(() => {
+   
     window.addEventListener("keyup", e => {
       if (e.key === "Escape") {
         closePicture();
@@ -109,6 +125,7 @@ function App({ canvasRef, videoRef }) {
   return (
     <>
       <div className="camera">
+        
         <canvas className="camera__canvas" ref={canvasRef}></canvas>
         <div className="camera__content">
           {!isOpenCamera ? (
@@ -122,7 +139,7 @@ function App({ canvasRef, videoRef }) {
                 className=" camera__btn camera__btn--screen"
                 onClick={() => autoScreen()}
               >
-                autoscreen
+               {captureDisabled?timerCount: 'autoscreen'}
               </button>
             ) : null}
             <button
@@ -184,6 +201,7 @@ function App({ canvasRef, videoRef }) {
         closePicture={closePicture}
         next={nextFullScreenPicture}
         prev={prevFullScreenPicture}
+        history={history}
       />
     </>
   );
