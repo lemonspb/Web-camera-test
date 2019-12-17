@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import FullScreen from "./Full-screen";
 import camera from "./image/camera.png";
 import soundClick from "./sound/click.mp3";
 import "./App.css";
 import Moment from "react-moment";
 
-function App({ canvasRef, videoRef }) {
+function App() {
+  const videoRef = useRef();
+  const canvasRef = useRef();
+  const timerToClearSomewhere = useRef(false)
   const [history, setHisory] = useState([]);
   const [fullPictureIndex, setFullPictureIndex] = useState(undefined);
   const [videos, setVideos] = useState("");
@@ -15,7 +18,6 @@ function App({ canvasRef, videoRef }) {
   const constraints = {
     video: { width: 400, height: 320 }
   };
-  let count = 4
 
 
   const makeSoundClick = () => {
@@ -38,7 +40,7 @@ function App({ canvasRef, videoRef }) {
     let date = new Date();
     let canvas = canvasRef.current;
     let ctx = canvas.getContext("2d");
-    ctx.drawImage(videos, 0, 0, 350, 160);
+    ctx.drawImage(videos, 0, 0, canvas.width, canvas.height);
     const img = canvas.toDataURL("image/png");
     const imageDate = {
       date,
@@ -48,7 +50,6 @@ function App({ canvasRef, videoRef }) {
   };
 
   const autoScreen = () => {
-    timer()
     setCaptureDisabled(true);
     setTimeout(() => {
       addHistory();
@@ -56,16 +57,7 @@ function App({ canvasRef, videoRef }) {
     }, 3000);
   };
   
-  const timer  = () =>{
-    count--
-    setTimerCount(count)
-   
-    if(count===0){
-      return false
-    }
-    setTimeout(timer , 1000)
-      
-  }
+
  
   const clearHistory = () => setHisory([]);
   const startVideo = () => {
@@ -74,6 +66,7 @@ function App({ canvasRef, videoRef }) {
       .getUserMedia(constraints)
       .then(function(stream) {
         let video = videoRef.current;
+        
 
         setVideos(video);
 
@@ -121,7 +114,21 @@ function App({ canvasRef, videoRef }) {
       }
     });
   }, []);
+  useEffect(
+    () => {
+      timerToClearSomewhere.current = setInterval(() => setTimerCount(timerCount-1), 1000)
 
+      return () => {
+        clearInterval(timerToClearSomewhere.current)
+      }
+    },
+    [timerCount]
+  )
+  useEffect(() => {
+    setTimeout(() => clearInterval(timerToClearSomewhere.current), 5000)
+
+   
+  }, []);
   return (
     <>
       <div className="camera">
