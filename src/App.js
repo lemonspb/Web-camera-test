@@ -40,6 +40,7 @@ function App() {
     let date = new Date();
     let canvas = canvasRef.current;
     let ctx = canvas.getContext("2d");
+  
     ctx.drawImage(videos, 0, 0, canvas.width, canvas.height);
     const img = canvas.toDataURL("image/png");
     const imageDate = {
