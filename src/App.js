@@ -15,6 +15,7 @@ function App() {
   const [timerCount, setTimerCount] = useState(3)
   const [isOpenCamera, setIsOpenCamera] = useState(false);
   const [captureDisabled, setCaptureDisabled] = useState(false);
+  let count = 4
   const constraints = {
     video: { width: 400, height: 320 }
   };
@@ -51,14 +52,24 @@ function App() {
   };
 
   const autoScreen = () => {
+    timer()
     setCaptureDisabled(true);
     setTimeout(() => {
       addHistory();
       setCaptureDisabled(false);
     }, 3000);
-  };
-  
+    };
 
+    const timer  = () =>{
+      count--
+      setTimerCount(count)
+  
+      if(count===0){
+        return false
+      }
+      setTimeout(timer , 1000)
+  
+    }
  
   const clearHistory = () => setHisory([]);
   const startVideo = () => {
@@ -115,21 +126,7 @@ function App() {
       }
     });
   }, []);
-  useEffect(
-    () => {
-      timerToClearSomewhere.current = setInterval(() => setTimerCount(timerCount-1), 1000)
-
-      return () => {
-        clearInterval(timerToClearSomewhere.current)
-      }
-    },
-    [timerCount]
-  )
-  useEffect(() => {
-    setTimeout(() => clearInterval(timerToClearSomewhere.current), 5000)
-
-   
-  }, []);
+ 
   return (
     <>
       <div className="camera">
